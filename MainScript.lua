@@ -6,7 +6,94 @@ local Tab = Window:NewTab("Main")
 local MainSection = Tab:NewSection("Main")
 
 MainSection:NewButton("E to fly!", "Press E to fly!", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/CFrame-Fly/main/Cframe-fly"))()
+    local Speed = 200
+
+
+    if not RootAnchorBypassed then
+        getgenv().RootAnchorBypassed = true
+        local Player = game:GetService("Players").LocalPlayer
+        local Character = Player.Character or Player.CharacterAdded:Wait()
+        local Root = Character:FindFirstChild("HumanoidRootPart")
+        Player.CharacterAdded:Connect(function(C)
+            Root = C:WaitForChild("HumanoidRootPart")
+            wait(0.5)
+            for _, C in pairs(getconnections(Root:GetPropertyChangedSignal("Anchored"))) do C:Disable() end
+        end)
+        
+        local GameMT = getrawmetatable(game)
+        local __oldindex = GameMT.__index
+        setreadonly(GameMT, false)
+        GameMT.__index = newcclosure(function(self, Key)
+            if self == Root and Key == "Anchored" then return false end
+            return __oldindex(self, Key)
+        end)
+        setreadonly(GameMT, true)
+    end
+    local UIS = game:GetService("UserInputService")
+    local OnRender = game:GetService("RunService").RenderStepped
+    
+    local Player = game:GetService("Players").LocalPlayer
+    local Character = Player.Character or Player.CharacterAdded:Wait()
+    
+    local Camera = workspace.CurrentCamera
+    local Root = Character:WaitForChild("HumanoidRootPart")
+    
+    local C1, C2, C3;
+    local Nav = {Flying = false, Forward = false, Backward = false, Left = false, Right = false}
+    C1 = UIS.InputBegan:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.Keyboard then
+            if Input.KeyCode == Enum.KeyCode.E then
+                Nav.Flying = not Nav.Flying
+                Root.Anchored = Nav.Flying
+            elseif Input.KeyCode == Enum.KeyCode.W then
+                Nav.Forward = true
+            elseif Input.KeyCode == Enum.KeyCode.S then
+                Nav.Backward = true
+            elseif Input.KeyCode == Enum.KeyCode.A then
+                Nav.Left = true
+            elseif Input.KeyCode == Enum.KeyCode.D then
+                Nav.Right = true
+            end
+        end
+    end)
+    
+    C2 = UIS.InputEnded:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.Keyboard then
+            if Input.KeyCode == Enum.KeyCode.W then
+                Nav.Forward = false
+            elseif Input.KeyCode == Enum.KeyCode.S then
+                Nav.Backward = false
+            elseif Input.KeyCode == Enum.KeyCode.A then
+                Nav.Left = false
+            elseif Input.KeyCode == Enum.KeyCode.D then
+                Nav.Right = false
+            end
+        end
+    end)
+    
+    C3 = Camera:GetPropertyChangedSignal("CFrame"):Connect(function()
+        if Nav.Flying then
+            Root.CFrame = CFrame.new(Root.CFrame.Position, Root.CFrame.Position + Camera.CFrame.LookVector)
+        end
+    end)
+    
+    while true do -- not EndAll
+        local Delta = OnRender:Wait()
+        if Nav.Flying then
+            if Nav.Forward then
+                Root.CFrame = Root.CFrame + (Camera.CFrame.LookVector * (Delta * Speed))
+            end
+            if Nav.Backward then
+                Root.CFrame = Root.CFrame + (-Camera.CFrame.LookVector * (Delta * Speed))
+            end
+            if Nav.Left then
+                Root.CFrame = Root.CFrame + (-Camera.CFrame.RightVector * (Delta * Speed))
+            end
+            if Nav.Right then
+                Root.CFrame = Root.CFrame + (Camera.CFrame.RightVector * (Delta * Speed))
+            end
+        end
+    end
 end)
 
 MainSection:NewSlider("Speed", "Increases your movement", 500, 16, function(v)
@@ -22,7 +109,14 @@ MainSection:NewKeybind("Toggle UI", "Press a key to toggle the UI", Enum.KeyCode
 end)
 
 MainSection:NewButton("CtrlClickTP", "Press Ctrl+Click to TP", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Ctrl-click-TP/main/CtrlClickTP"))()
+    local Plr = game:GetService("Players").LocalPlayer
+local Mouse = Plr:GetMouse()
+
+Mouse.Button1Down:connect(function()
+if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then return end
+if not Mouse.Target then return end
+Plr.Character:MoveTo(Mouse.Hit.p)
+end)
 end)
 
 local Tab = Window:NewTab("Other Scripts")
@@ -160,35 +254,3 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
     end)
 end)
 
-MiscSection:NewButton("Anti-Afk", "Prevents you from being kicked for afk!", function()
-    local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-   wait(1)
-   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
-		
-ScriptsSection:NewButton("DarkDex v3", "Loads DarkDex V3", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
-end)
-
-ScriptsSection:NewButton("Vape V4", "Loads Vape V4", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
-end)
-		
-ScriptsSection:NewButton("FutureClient", "Loads FutureClient", function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/joeengo/Future/main/loadstring.lua', true))()
-end)
-		
-MiscSection:NewButton("Btools", "Gives you Btools!", function()
-    local tool1 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
-    local tool2 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
-    local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
-    local tool4 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
-    local tool5 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
-    tool1.BinType = "Clone"
-    tool2.BinType = "GameTool"
-    tool3.BinType = "Hammer"
-    tool4.BinType = "Script"
-    tool5.BinType = "Grab"
-  end)
