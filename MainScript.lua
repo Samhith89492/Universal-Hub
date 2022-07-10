@@ -146,11 +146,11 @@ local CreditsTab = Window:NewTab("Credits")
 local CreditsSection = CreditsTab:NewSection("Credits")
 
 CreditsSection:NewButton("SamhithWasTaken#1874 aka myself lol", "credits to my self lol", function()
-    print(ok)
+    setclipboard(tostring("SamhithWasTaken#1874"))
 end)
 
 CreditsSection:NewButton("Randomguy#6407", "credits to him for chams", function()
-    print(ok)
+    setclipboard(tostring("Randomguy#6407"))
 end)
 
 
