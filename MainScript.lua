@@ -53,6 +53,18 @@ ScriptsSection:NewButton("EngoSpy", "Loads EngoSpy", function()
      loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/engospy/main/source.lua"))(settings)
 end)
 
+ScriptsSection:NewButton("Darkdex v3", "This loads Darkdex v3", function()
+    local settings = {
+        saveCalls = false,
+        maxCallsSaved = 1000,
+        saveOnlyLastCall = true,
+        maxTableDepth = 100,
+        minimizeBind = Enum.KeyCode.RightAlt,
+        blacklistedNames = {}
+     }
+     loadstring(game:HttpGet("https://pastebin.com/raw/fPP8bZ8Z"))(settings)
+end)
+
 MainSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
 end)
@@ -158,4 +170,11 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
     game:GetService("UserInputService").JumpRequest:connect(function()
             game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
     end)
+		
+MiscSection:NewButton("Anti-afk", "Prevents you from being kicked for afk!", function()
+    local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
