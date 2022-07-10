@@ -159,3 +159,23 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
             game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
     end)
 end)
+
+MiscSection:NewButton("Anti-Afk", "Prevents you from being kicked for afk!", function()
+    local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+		
+ScriptsSection:NewButton("DarkDex v3", "Loads DarkDex V3", function()
+loadstring(game:HttpGet("https://pastebin.com/raw/fPP8bZ8Z"))()
+end)
+
+ScriptsSection:NewButton("Vape V4", "Loads Vape V4", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+end)
+		
+ScriptsSection:NewButton("FutureClient", "Loads FutureClient", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/joeengo/Future/main/loadstring.lua', true))()
+end)				
