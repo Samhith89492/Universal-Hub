@@ -169,7 +169,7 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
 end)
 		
 ScriptsSection:NewButton("DarkDex v3", "Loads DarkDex V3", function()
-loadstring(game:HttpGet("https://pastebin.com/raw/fPP8bZ8Z"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
 end)
 
 ScriptsSection:NewButton("Vape V4", "Loads Vape V4", function()
