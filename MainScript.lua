@@ -178,4 +178,17 @@ end)
 		
 ScriptsSection:NewButton("FutureClient", "Loads FutureClient", function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/joeengo/Future/main/loadstring.lua', true))()
-end)				
+end)
+		
+ScriptsSection:NewButton("Btools", "Gives you Btools!", function()
+    local tool1 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+    local tool2 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+    local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+    local tool4 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+    local tool5 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+    tool1.BinType = "Clone"
+    tool2.BinType = "GameTool"
+    tool3.BinType = "Hammer"
+    tool4.BinType = "Script"
+    tool5.BinType = "Grab"
+  end)
