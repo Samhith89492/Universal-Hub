@@ -254,22 +254,22 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
     end)
 end)
 
-MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
+MiscSection:NewButton("Chat Spammer", "Spams toxic messages that promotes the script", function(v)
   repeat
     local args = {
-        [1] = "Bad? Just give up and use universal hub!,",
+        [1] = "Bad? Just use universal hub!,",
         [2] = "All"
     }
     wait(1)
     local args = {
-        [1] = "Why not use universal hub, Why? Because your bad,",
+        [1] = "Just because your bad dosent mean you will always stay bad, Get universal hub now!,",
         [2] = "All"
     }
     wait(1)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
     wait(1)
     local args = {
-        [1] = "Just stay mad, Stay mad, No one cares, Just use universal hub, It isnt that hard,",
+        [1] = "Mad because bad? Get universal hub now!,",
         [2] = "All"
     }
     wait(1)
