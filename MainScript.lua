@@ -6,7 +6,7 @@ local Tab = Window:NewTab("Main")
 local MainSection = Tab:NewSection("Main")
 
 MainSection:NewButton("E to fly!", "Press E to fly!", function()
-    local Speed = 200
+    local Speed = 75
 
 
     if not RootAnchorBypassed then
@@ -146,6 +146,18 @@ ScriptsSection:NewButton("EngoSpy", "Loads EngoSpy", function()
      }
      loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/engospy/main/source.lua"))(settings)
 end)
+
+ScriptsSection:NewButton("Mad city autofarm", "Loads Mad city autofarm", function()
+		
+    loadstring(game:HttpGet("https://system-exodus.com/scripts/madcity/MadLadsAR.lua",true))()
+end)
+
+ScriptsSection:NewButton("Rayx", "Loads Dahood Rayx", function()  --modded with no key--
+		
+    game:GetService("Players").LocalPlayer.IsInGroup hookfunction(game:GetService("Players").LocalPlayer.IsInGroup, newcclosure(function(self, id) if id == 12271076 then return true end return old(self, id) end)) loadstring(game:HttpGet('https://raw.githubusercontent.com/SpaceYes/Lua/Main/DaHood.Lua'))()
+
+end)
+
 
 MainSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
