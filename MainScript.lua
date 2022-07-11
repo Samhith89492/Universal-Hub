@@ -3,9 +3,9 @@ local Window = Library.CreateLib("Universal Hub (Beta)", "Sentinel")
 
 local Tab = Window:NewTab("Movement")
 
-local MainSection = Tab:NewSection("Movement")
+local MovementSection = Tab:NewSection("Movement")
 
-MainSection:NewButton("E to fly!", "Press E to fly!", function()
+MovementSection:NewButton("E to fly!", "Press E to fly!", function()
     local Speed = 200
 
 
@@ -77,7 +77,7 @@ MainSection:NewButton("E to fly!", "Press E to fly!", function()
         end
     end)
     
-    while true do -- not EndAll
+    while true do
         local Delta = OnRender:Wait()
         if Nav.Flying then
             if Nav.Forward then
@@ -96,19 +96,19 @@ MainSection:NewButton("E to fly!", "Press E to fly!", function()
     end
 end)
 
-MainSection:NewSlider("Speed", "Increases your movement", 500, 16, function(v)
+MovementSection:NewSlider("Speed", "Increases your movement", 500, 16, function(v)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
 end)
 
-MainSection:NewSlider("JumpPower", "Increases your jumppower", 500, 50, function(v)
+MovementSection:NewSlider("JumpPower", "Increases your jumppower", 500, 50, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
 end)
 
-MainSection:NewKeybind("Toggle UI", "Press a key to toggle the UI", Enum.KeyCode.F, function()
+MovementSection:NewKeybind("Toggle UI", "Press a key to toggle the UI", Enum.KeyCode.F, function()
 	Library:ToggleUI()
 end)
 
-MainSection:NewButton("CtrlClickTP", "Press Ctrl+Click to TP", function()
+MovementSection:NewButton("CtrlClickTP", "Press Ctrl+Click to TP", function()
     local Plr = game:GetService("Players").LocalPlayer
 local Mouse = Plr:GetMouse()
 
@@ -119,9 +119,9 @@ Plr.Character:MoveTo(Mouse.Hit.p)
 end)
 end)
 
-local Tab = Window:NewTab("Utility Scripts")
+local Tab = Window:NewTab("Other Scripts")
 
-local ScriptsSection = Tab:NewSection("Utility Scripts")
+local ScriptsSection = Tab:NewSection("Scripts")
 
 ScriptsSection:NewButton("Hydroxide", "Loads Hydroxide", function()
     local owner = "Upbolt"
@@ -131,14 +131,6 @@ local function webImport(file)
     return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/Hydroxide/%s/%s.lua"):format(owner, branch, file)), file .. '.lua')()
 end
 
-ScriptsSection:NewButton("Infinite Yield", "Loads Infinite yield", function()
-    loadstring(game:HttpGet(('https://pastebin.com/raw/tzTXmYf2'),true))()
-end)
-
-ScriptsSection:NewButton("Septex's admin", "Loads septex's admin for prison life", function()
-    loadstring(game:HttpGet(('https://raw.githubusercontent.com/XTheMasterX/Scripts/Main/PrisonLife'),true))()
-end)
-		
 webImport("init")
 webImport("ui/main")
 end)
@@ -155,7 +147,7 @@ ScriptsSection:NewButton("EngoSpy", "Loads EngoSpy", function()
      loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/engospy/main/source.lua"))(settings)
 end)
 
-MainSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
+MovementSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
 end)
 
@@ -167,80 +159,126 @@ MiscSection:NewButton("Force Respawn", "Allows you to respawn forcefully", funct
     game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end)
 
-MainSection:NewSlider("Gravity", "Changes your Gravity", 196, 0, function(v)
+MovementSection:NewSlider("Gravity", "Changes your Gravity", 196, 0, function(v)
     game.Workspace.Gravity = v
 end)
 
-local ESPTab = Window:NewTab("FPS utility")
-local ESPSection = ESPTab:NewSection("FPS utility")
+local ESPTab = Window:NewTab("ESP")
+local ESPSection = ESPTab:NewSection("ESP")
 
 ESPSection:NewButton("Chams", "Enables chams", function()
-    _G.FriendColor = Color3.fromRGB(0, 0, 255)
-_G.EnemyColor = Color3.fromRGB(255, 0, 0)
-_G.UseTeamColor = false
+    local coreGui = game:GetService("CoreGui")
+local runService = game:GetService("RunService")
 
---------------------------------------------------------------------
+-- create viewport frame and gui
+local viewportGui = Instance.new("ScreenGui", coreGui)
+viewportGui.IgnoreGuiInset = true
 
-if _G.Reantheajfdfjdgse then
-    return
+local viewportFrame = Instance.new("ViewportFrame")
+viewportFrame.Parent = viewportGui
+viewportFrame.CurrentCamera = workspace.CurrentCamera
+viewportFrame.BackgroundTransparency = 1
+viewportFrame.Size = UDim2.new(1, 0, 1, 0)
+viewportFrame.Position = UDim2.new(0, 0, 0, 0)
+
+-- clone part function
+function clonePart(part, model, character)
+	-- check if part is a BasePart
+    if part:IsA("BasePart") then
+		local head = character:WaitForChild("Head")
+
+		-- clone part
+		local clone = part:Clone() 
+
+		-- loop through cloned part
+		for _, obj in next, clone:GetChildren() do
+			-- destroy anything that isnt a SpecialMesh
+			if not obj:IsA("SpecialMesh") then
+				obj:Destroy()
+				continue
+			end
+
+			-- change SpecialMesh texture id to nothing
+			obj.TextureId = ""
+		end
+
+		-- change clone color and parent clone
+		clone.Color = Color3.fromRGB(0, 255, 0)
+		clone.Parent = model
+
+		-- loop clone
+		runService.RenderStepped:connect(function()
+			-- check if head exists
+			if head:IsDescendantOf(workspace) then
+				-- object on screen
+				local _, visible = workspace.CurrentCamera:WorldToViewportPoint(part.Position)
+
+				-- if object is on screen
+				if visible then
+					-- change CFrame and Size and Transparency of clone
+					clone.CFrame = part.CFrame
+					clone.Size = part.Size
+					clone.Transparency = part.Transparency < 1 and 0 or 1
+				else
+					-- if not visible then stop rendering
+					clone.Transparency = 1
+				end
+			else
+				-- if object doesnt exist delete it and move on
+				model:Destroy()
+				return
+			end
+		end)
+	end
 end
 
-_G.Reantheajfdfjdgse = "susan"
+function chams(character)
+	-- create model for cloned parts to be in
+    local model = Instance.new("Model")
+    model.Name = character.Name
+    model.Parent = viewportFrame
 
-local coregui = game:GetService("CoreGui")
-local players = game:GetService("Players")
-local plr = players.LocalPlayer
-
-local highlights = {}
-
-function esp(target, color)
-    pcall(function()
-        if target.Character then
-            if not highlights[target] then
-                local highlight = Instance.new("Highlight", coregui)
-                highlight.Name = target.Name
-                highlight.Adornee = target.Character
-                highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-                highlight.FillColor = color
-                highlights[target] = highlight
-            else
-                highlights[target].FillColor = color
-            end
+	-- loop through character
+    for _, obj in next, character:GetChildren() do
+		-- if character has a head then
+        if character:FindFirstChild("Head") then
+			-- clone parts
+            clonePart(obj, model, character)
         end
+    end
+end
+
+-- loop players
+for _, plr in next, game:GetService("Players"):GetChildren() do
+	-- get character
+    local character = plr.Character or plr.CharacterAdded:Wait()
+    character:WaitForChild("Head")
+
+	-- add chams to character
+    chams(character)
+
+	-- on character created
+    plr.CharacterAdded:connect(function(char)
+		-- create chams
+        char:WaitForChild("Head")
+        chams(char)
     end)
 end
 
-players.PlayerAdded:Connect(function(v)
-    v.CharacterAdded:Connect(function()
-        esp(v, _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor))
+-- on player join
+game:GetService("Players").PlayerAdded:connect(function(plr)
+	-- get character
+    local character = plr.Character or plr.CharacterAdded:Wait()
+    character:WaitForChild("Head")
+    chams(character)
+    
+	-- on character created
+    plr.CharacterAdded:connect(function(char)
+		-- create chams
+        char:WaitForChild("Head")
+        chams(char)
     end)
-end)
-
-players.PlayerRemoving:Connect(function(v)
-    if highlights[v] then
-        highlights[v]:Destroy()
-        highlights[v] = nil
-    end
-end)
-
-for i, v in pairs(players:GetPlayers()) do
-    if v ~= plr then
-        local color = _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor)
-        v.CharacterAdded:Connect(function()
-            local color = _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor)
-            esp(v, color)
-        end)
-        
-        esp(v, color)
-    end
-end
-
-while task.wait() do
-    for i, v in pairs(highlights) do
-        local color = _G.UseTeamColor and i.TeamColor.Color or ((plr.TeamColor == i.TeamColor) and _G.FriendColor or _G.EnemyColor)
-        v.FillColor = color
-    end
-end
+end)  
 end)
 
 local CreditsTab = Window:NewTab("Credits")
@@ -251,12 +289,8 @@ CreditsSection:NewButton("SamhithWasTaken#1874 aka myself lol", "credits to my s
     setclipboard(tostring("SamhithWasTaken#1874"))
 end)
 
-CreditsSection:NewButton("Randomguy#6407", "Helping adding stuff", function()
+CreditsSection:NewButton("Randomguy#6407", "credits to him for chams", function()
     setclipboard(tostring("Randomguy#6407"))
-end)
-
-CreditsSection:NewButton("Discord server", "Universal hub's discord server!", function()
-    setclipboard(tostring("https://discord.gg/S7DdqsMFTs"))
 end)
 
 
@@ -266,22 +300,22 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
     end)
 end)
 
-MiscSection:NewButton("Chat Spammer", "Spams toxic messages that promotes the script", function(v)
+MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
   repeat
     local args = {
-        [1] = "Bad? Just use universal hub!,",
+        [1] = "Bad? Just give up and use universal hub!,",
         [2] = "All"
     }
     wait(1)
     local args = {
-        [1] = "Just because your bad dosent mean you will always stay bad, Get universal hub now!,",
+        [1] = "Why not use universal hub, Why? Because your bad,",
         [2] = "All"
     }
     wait(1)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
     wait(1)
     local args = {
-        [1] = "Mad because bad? Get universal hub now!,",
+        [1] = "Just stay mad, Stay mad, No one cares, Just use universal hub, It isnt that hard,",
         [2] = "All"
     }
     wait(1)
