@@ -159,6 +159,31 @@ MainSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
 end)
 
+local Tab = Window:NewTab("Game scripts")
+
+local Gamesection = Tab:NewSection("Game scripts")
+
+GameSection:NewButton("Vape v4", "Opens vape v4 (Roblox bedwars)", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+end)
+
+GameSection:NewButton("future", "Opens Future client (Roblox bedwars)", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+end)
+
+GameSection:NewButton("Rayx", "Rayx (Dahood)", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/SpaceYes/Lua/Main/DaHood.Lua'))()
+end)
+
+GameSection:NewButton("Owlhub", "Owlhub (Arsernal?)", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ZinityDrops/OwlHubLink/master/OwlHubBack.lua"))();
+end)
+
+
+
+
+
+
 local Tab = Window:NewTab("Misc")
 
 local MiscSection = Tab:NewSection("Misc")
@@ -251,8 +276,12 @@ CreditsSection:NewButton("SamhithWasTaken#1874 aka myself lol", "credits to my s
     setclipboard(tostring("SamhithWasTaken#1874"))
 end)
 
-CreditsSection:NewButton("Randomguy#6407", "credits to him for chams", function()
+CreditsSection:NewButton("Randomguy#6407", "Helping adding stuff", function()
     setclipboard(tostring("Randomguy#6407"))
+end)
+
+CreditsSection:NewButton("Discord server", "Universal hub's discord server!", function()
+    setclipboard(tostring("https://discord.gg/S7DdqsMFTs"))
 end)
 
 
