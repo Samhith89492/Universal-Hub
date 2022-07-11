@@ -159,31 +159,6 @@ MainSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
 end)
 
-local Tab = Window:NewTab("Game scripts")
-
-local Gamesection = Tab:NewSection("Game scripts")
-
-GameSection:NewButton("Vape v4", "Opens vape v4 (Roblox bedwars)", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
-end)
-
-GameSection:NewButton("future", "Opens Future client (Roblox bedwars)", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
-end)
-
-GameSection:NewButton("Rayx", "Rayx (Dahood)", function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/SpaceYes/Lua/Main/DaHood.Lua'))()
-end)
-
-GameSection:NewButton("Owlhub", "Owlhub (Arsernal?)", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ZinityDrops/OwlHubLink/master/OwlHubBack.lua"))();
-end)
-
-
-
-
-
-
 local Tab = Window:NewTab("Misc")
 
 local MiscSection = Tab:NewSection("Misc")
