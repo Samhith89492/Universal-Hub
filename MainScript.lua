@@ -254,11 +254,6 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
     end)
 end)
 
-MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function()
-    game:GetService("UserInputService").JumpRequest:connect(function()
-            game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
-    end)
-end)
     
 MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
   repeat
@@ -268,14 +263,14 @@ MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
     }
     wait(1)
     local args = {
-        [1] = "Why not use universal hub, Why? Because your bad,",
+        [1] = "Bro admit your bad, Just get universal hub,",
         [2] = "All"
     }
     wait(1)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
     wait(1)
     local args = {
-        [1] = "Just stay mad, Stay mad, No one cares, Just use universal hub, It isnt that hard,",
+        [1] = "Stay mad about it because your bad, Just use universal hub to improve ur skills,",
         [2] = "All"
     }
     wait(1)
