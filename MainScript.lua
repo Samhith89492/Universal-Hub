@@ -131,6 +131,14 @@ local function webImport(file)
     return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/Hydroxide/%s/%s.lua"):format(owner, branch, file)), file .. '.lua')()
 end
 
+ScriptsSection:NewButton("Infinite Yield", "Loads Infinite yield", function()
+    loadstring(game:HttpGet(('https://pastebin.com/raw/tzTXmYf2'),true))()
+end)
+
+ScriptsSection:NewButton("Septex's admin", "Loads septex's admin for prison life", function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/XTheMasterX/Scripts/Main/PrisonLife'),true))()
+end)
+		
 webImport("init")
 webImport("ui/main")
 end)
@@ -163,8 +171,8 @@ MainSection:NewSlider("Gravity", "Changes your Gravity", 196, 0, function(v)
     game.Workspace.Gravity = v
 end)
 
-local ESPTab = Window:NewTab("ESP")
-local ESPSection = ESPTab:NewSection("ESP")
+local ESPTab = Window:NewTab("FPS utility")
+local ESPSection = ESPTab:NewSection("FPS utility")
 
 ESPSection:NewButton("Chams", "Enables chams", function()
     _G.FriendColor = Color3.fromRGB(0, 0, 255)
