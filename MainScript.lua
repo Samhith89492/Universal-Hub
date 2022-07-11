@@ -1,5 +1,5 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Universal Hub (Beta)", "BloodTheme")
+local Window = Library.CreateLib("Universal Hub (Beta)", "Sentinel")
 
 local Tab = Window:NewTab("Main")
 
@@ -254,3 +254,31 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
     end)
 end)
 
+MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function()
+    game:GetService("UserInputService").JumpRequest:connect(function()
+            game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+    end)
+end)
+    
+MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
+  repeat
+    local args = {
+        [1] = "Bad? Just give up and use universal hub!,",
+        [2] = "All"
+    }
+    wait(1)
+    local args = {
+        [1] = "Why not use universal hub, Why? Because your bad,",
+        [2] = "All"
+    }
+    wait(1)
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Just stay mad, Stay mad, No one cares, Just use universal hub, It isnt that hard,",
+        [2] = "All"
+    }
+    wait(1)
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+until v == false
+end)
