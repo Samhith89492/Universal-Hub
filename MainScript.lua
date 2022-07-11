@@ -6,7 +6,7 @@ local Tab = Window:NewTab("Main")
 local MainSection = Tab:NewSection("Main")
 
 MainSection:NewButton("E to fly!", "Press E to fly!", function()
-    local Speed = 75
+    local Speed = 200
 
 
     if not RootAnchorBypassed then
@@ -147,18 +147,6 @@ ScriptsSection:NewButton("EngoSpy", "Loads EngoSpy", function()
      loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/engospy/main/source.lua"))(settings)
 end)
 
-ScriptsSection:NewButton("Mad city autofarm", "Loads Mad city autofarm", function()
-		
-    loadstring(game:HttpGet("https://system-exodus.com/scripts/madcity/MadLadsAR.lua",true))()
-end)
-
-ScriptsSection:NewButton("Rayx", "Loads Dahood Rayx", function()  --modded with no key--
-		
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/SpaceYes/Lua/Main/DaHood.Lua'))()
-
-end)
-
-
 MainSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
 end)
@@ -289,163 +277,7 @@ MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
 until v == false
 end)
 
-MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
-    repeat
-      local args = {
-          [1] = "Bad? Just give up and use universal hub!,",
-          [2] = "All"
-      }
-      wait(1)
-      local args = {
-          [1] = "Why not use universal hub, Why? Because your bad,",
-          [2] = "All"
-      }
-      wait(1)
-      game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-      wait(1)
-      local args = {
-          [1] = "Just stay mad, Stay mad, No one cares, Just use universal hub, It isnt that hard,",
-          [2] = "All"
-      }
-      wait(1)
-      game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-  until v == false
-  end)
-
 MiscSection:NewButton("Aimbot", "Locks onto a player when you right click on someone", function()
-local lplayer = game.Players.LocalPlayer
-local mouse = lplayer:GetMouse()
-local Current = game.Workspace.CurrentCamera
-local GuiService = game:GetService("StarterGui")
-local enabled = false
-local aimbot = true
-local aimat = 'Torso'
-local Track = false
-local User = game:GetService("UserInputService")
-
-GuiService:SetCore("SendNotification", {Title = "Aimlock", Text = "Script Loaded";})
-
-function GetNearestPlayerToMouse()
-local Users = {}
-local lplayer_hold = {}
-local Distances = {}
-for i, v in pairs(game.Players:GetPlayers()) do
-if v ~= lplayer then
-table.insert(Users, v)
-end
-end
-for i, v in pairs(Users) do
-if aimbot == false then
-if v and (v.Character) ~= nil and v.TeamColor ~= lplayer.TeamColor then
-local aim = v.Character:FindFirstChild(aimat)
-if aim ~= nil then
-local Distance = (aim.Position - game.Workspace.CurrentCamera.CoordinateFrame.p).magnitude
-local ray = Ray.new(game.Workspace.CurrentCamera.CoordinateFrame.p, (mouse.Hit.p - Current.CoordinateFrame.p).unit * Distance)
-local hit,pos = game.Workspace:FindPartOnRay(ray, game.Workspace)
-local diff = math.floor((pos - aim.Position).magnitude)
-lplayer_hold[v.Name .. i] = {}
-lplayer_hold[v.Name .. i].dist = Distance
-lplayer_hold[v.Name .. i].plr = v
-lplayer_hold[v.Name .. i].diff = diff
-table.insert(Distances, diff)
-end
-end
-elseif aimbot == true then
-local aim = v.Character:FindFirstChild(aimat)
-if aim ~= nil then
-local Distance = (aim.Position - game.Workspace.CurrentCamera.CoordinateFrame.p).magnitude
-local ray = Ray.new(game.Workspace.CurrentCamera.CoordinateFrame.p, (mouse.Hit.p - Current.CoordinateFrame.p).unit * Distance)
-local hit,pos = game.Workspace:FindPartOnRay(ray, game.Workspace)
-local diff = math.floor((pos - aim.Position).magnitude)
-lplayer_hold[v.Name .. i] = {}
-lplayer_hold[v.Name .. i].dist = Distance
-lplayer_hold[v.Name .. i].plr = v
-lplayer_hold[v.Name .. i].diff = diff
-table.insert(Distances, diff)
-end
-end
-end
-
-if unpack(Distances) == nil then
-return false
-end
-
-local L_Distance = math.floor(math.min(unpack(Distances)))
-if L_Distance > 20 then
-return false
-end
-
-for i, v in pairs(lplayer_hold) do
-if v.diff == L_Distance then
-return v.plr
-end
-end
-return false
-end
-
-function Find()
-Clear()
-Track = true
-spawn(function()
-while wait() do
-if Track then
-Clear()
-for i,v in pairs(game.Players:GetChildren()) do
-if v.Character and v.Character:FindFirstChild('Head') then
-if aimbot == false then
-if v.TeamColor ~= lplayer.TeamColor then
-if v.Character:FindFirstChild('Head') then
-create(v.Character.Head, true)
-end
-end
-else
-if v.Character:FindFirstChild('Head') then
-create(v.Character.Head, true)
-end
-end
-end
-end
-end
-end
-wait(1)
-end)
-end
-
-game:GetService('RunService').RenderStepped:connect(function()
-if enabled then
-local target = GetNearestPlayerToMouse()
-if (target ~= false) then
-local aim = target.Character:FindFirstChild(aimat)
-if aim then
-Current.CoordinateFrame = CFrame.new(Current.CoordinateFrame.p, aim.CFrame.p)
-end
-
-else
-
-end
-end
-end)
-
-mouse.KeyDown:connect(function(key)
-if key == "q" then
-if aimat == 'Head' then
-aimat = 'Torso'
-           GuiService:SetCore("SendNotification", {Title = "Aimlock", Text = "Aimlock now set to Torso";})
-elseif aimat == 'Torso' then
-aimat = 'Head'
-           GuiService:SetCore("SendNotification", {Title = "Aimlock", Text = "Aimlock now set to Head";})
-end
-end
-end)
-
-User.InputBegan:Connect(function(inputObject)
-   if(inputObject.KeyCode==Enum.KeyCode.LeftControl) then
-       enabled = true
-   end
-end)
-
-User.InputEnded:Connect(function(inputObject)
-   if(inputObject.KeyCode==Enum.KeyCode.LeftControl) then
-       enabled = false
-   end
-end)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/aimbot"))()
+  end)
+    
