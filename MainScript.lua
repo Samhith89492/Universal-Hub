@@ -1,9 +1,9 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local Window = Library.CreateLib("Universal Hub (Beta)", "Sentinel")
 
-local Tab = Window:NewTab("Main")
+local Tab = Window:NewTab("Movement")
 
-local MainSection = Tab:NewSection("Main")
+local MainSection = Tab:NewSection("Movement")
 
 MainSection:NewButton("E to fly!", "Press E to fly!", function()
     local Speed = 200
@@ -119,9 +119,9 @@ Plr.Character:MoveTo(Mouse.Hit.p)
 end)
 end)
 
-local Tab = Window:NewTab("Other Scripts")
+local Tab = Window:NewTab("Utility Scripts")
 
-local ScriptsSection = Tab:NewSection("OtherScripts")
+local ScriptsSection = Tab:NewSection("Utility Scripts")
 
 ScriptsSection:NewButton("Hydroxide", "Loads Hydroxide", function()
     local owner = "Upbolt"
