@@ -349,6 +349,36 @@ ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance a
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/nametags.lua"))()
  end)
 
+MiscSection:NewButton("Gamepasses (might not work on some games)", "Gives you gamepasses for free", function()
+    if game.CreatorType == Enum.CreatorType.User then
+        game.Players.LocalPlayer.UserId = game.CreatorId
+    end
+    if game.CreatorType == Enum.CreatorType.Group then
+        game.Players.LocalPlayer.UserId = game:GetService("GroupService"):GetGroupInfoAsync(game.CreatorId).Owner.Id
+    end
+ end)
+
+MiscSection:NewButton("Hitboxes (might not work on some games)", "Extends your hitboxes", function(v)
+    _G.HeadSize = 20
+	_G.Enabled = true
+
+	game:GetService('RunService').RenderStepped:connect(function()
+		if _G.Enabled then
+			for i,v in next, game:GetService('Players'):GetPlayers() do
+				if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+					pcall(function()
+						v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+						v.Character.HumanoidRootPart.Transparency = 0.7
+						v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really red")
+						v.Character.HumanoidRootPart.Material = "Neon"
+						v.Character.HumanoidRootPart.CanCollide = false
+					end)
+				end
+			end
+		end
+	end)
+ end)
+
 
 
 
