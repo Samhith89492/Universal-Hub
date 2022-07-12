@@ -345,10 +345,6 @@ MiscSection:NewButton("ScriptHub", "Place for most scripts (extension)", functio
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Randomguy24356/Scripthub/main/go2hub"))()
  end)
 
-ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance away", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/nametags.lua"))()
- end)
-
 MiscSection:NewButton("Gamepasses (might not work on some games)", "Gives you gamepasses for free", function()
     if game.CreatorType == Enum.CreatorType.User then
         game.Players.LocalPlayer.UserId = game.CreatorId
@@ -452,11 +448,51 @@ ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance a
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/silent-aim"))()
  end)
 
-CreditsSection:NewButton("CreditsSection:NewButton("zep#1969", "credits to him for tracers", function()
+CreditsSection:NewButton("zep#1969", "Credits to him for tracers", function()
     setclipboard(tostring("zep#1969"))
-	
-CreditsSection:NewButton("CreditsSection:NewButton("Copy discord invite", "Sets our discord invite link to your clipboard", function()
+ end)
+
+CreditsSection:NewButton("Copy discord invite", "Copies our discord invite to your clipboard", function()
     setclipboard(tostring("https://discord.gg/RRTDy8uu4t"))
+ end)
+
+MiscSection:NewButton("Silent Aim", "Automatically tries hitting a player even when you miss your shot", function()
+    local cc = game.workspace.CurrentCamera
+local mouse = game.Players.LocalPlayer:GetMouse()
+function getClosestMouse(trg_part)
+    local nearest = nil  
+    local last = math.huge
+    for i,v in pairs(game.Players:GetPlayers()) do 
+        if v ~= game.Players.LocalPlayer and game.Players.LocalPlayer.Character and v.Character and v.Character:FindFirstChild(trg_part) and v.TeamColor ~= game.Players.LocalPlayer.TeamColor then 
+            local ePos = cc:WorldToViewportPoint(v.Character[trg_part].Position)
+            local AccPos = Vector2.new(ePos.x, ePos.y)
+            local mousePos = Vector2.new(cc.ViewportSize.x / 2, cc.ViewportSize.y / 2)
+            local distance = (AccPos - mousePos).magnitude
+            if distance < last then
+                last = distance
+                nearest = v
+            end
+        end
+    end
+    if nearest ~= nil then
+        return nearest
+    end
+end
+local gameMeta = getrawmetatable(game)
+setreadonly(gameMeta, false)
+local oldNamecall = gameMeta.__namecall
+gameMeta.__namecall = newcclosure(function(remote, ...)
+    local arguments = {...}
+    if tostring(remote) == 'HitPart' then
+        local getclose = getClosestMouse("Head")
+        arguments[1] = getclose.Character.Head
+        arguments[2] = getclose.Character.Head.Position
+        return remote.FireServer(remote, unpack(arguments))
+    end
+    return oldNamecall(remote, ...)
+end)
+ end)
+
 
 
 
