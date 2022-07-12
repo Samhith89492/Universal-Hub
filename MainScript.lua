@@ -6,7 +6,7 @@ local Tab = Window:NewTab("Movement")
 local MovementSection = Tab:NewSection("Movement")
 
 MovementSection:NewButton("E to fly!", "Press E to fly!", function()
-    local Speed = 200
+    local Speed = 450
 
 
     if not RootAnchorBypassed then
