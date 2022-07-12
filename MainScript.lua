@@ -341,6 +341,10 @@ MiscSection:NewButton("Aimbot", "Locks onto a player when you right click on som
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/aimbot"))()
  end)
 
+MiscSection:NewButton("ScriptHub", "Place for most scripts (extension)", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Randomguy24356/Scripthub/main/go2hub"))()
+ end)
+
 ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance away", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/nametags.lua"))()
  end)
