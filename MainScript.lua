@@ -167,118 +167,132 @@ local ESPTab = Window:NewTab("ESP")
 local ESPSection = ESPTab:NewSection("ESP")
 
 ESPSection:NewButton("Chams", "Enables chams", function()
-    local coreGui = game:GetService("CoreGui")
-local runService = game:GetService("RunService")
+    local dwEntities = game:GetService("Players")
+local dwLocalPlayer = dwEntities.LocalPlayer 
+local dwRunService = game:GetService("RunService")
 
--- create viewport frame and gui
-local viewportGui = Instance.new("ScreenGui", coreGui)
-viewportGui.IgnoreGuiInset = true
+local settings_tbl = {
+    ESP_Enabled = true,
+    ESP_TeamCheck = false,
+    Chams = true,
+    Chams_Color = Color3.fromRGB(13,105,172),
+    Chams_Transparency = 0.1,
+    Chams_Glow_Color = Color3.fromRGB(13,105,172)
+}
 
-local viewportFrame = Instance.new("ViewportFrame")
-viewportFrame.Parent = viewportGui
-viewportFrame.CurrentCamera = workspace.CurrentCamera
-viewportFrame.BackgroundTransparency = 1
-viewportFrame.Size = UDim2.new(1, 0, 1, 0)
-viewportFrame.Position = UDim2.new(0, 0, 0, 0)
+function destroy_chams(char)
 
--- clone part function
-function clonePart(part, model, character)
-	-- check if part is a BasePart
-    if part:IsA("BasePart") then
-		local head = character:WaitForChild("Head")
+    for k,v in next, char:GetChildren() do 
 
-		-- clone part
-		local clone = part:Clone() 
+        if v:IsA("BasePart") and v.Transparency ~= 1 then
 
-		-- loop through cloned part
-		for _, obj in next, clone:GetChildren() do
-			-- destroy anything that isnt a SpecialMesh
-			if not obj:IsA("SpecialMesh") then
-				obj:Destroy()
-				continue
-			end
+            if v:FindFirstChild("Glow") and 
+            v:FindFirstChild("Chams") then
 
-			-- change SpecialMesh texture id to nothing
-			obj.TextureId = ""
-		end
+                v.Glow:Destroy()
+                v.Chams:Destroy() 
 
-		-- change clone color and parent clone
-		clone.Color = Color3.fromRGB(0, 255, 0)
-		clone.Parent = model
+            end 
 
-		-- loop clone
-		runService.RenderStepped:connect(function()
-			-- check if head exists
-			if head:IsDescendantOf(workspace) then
-				-- object on screen
-				local _, visible = workspace.CurrentCamera:WorldToViewportPoint(part.Position)
+        end 
 
-				-- if object is on screen
-				if visible then
-					-- change CFrame and Size and Transparency of clone
-					clone.CFrame = part.CFrame
-					clone.Size = part.Size
-					clone.Transparency = part.Transparency < 1 and 0 or 1
-				else
-					-- if not visible then stop rendering
-					clone.Transparency = 1
-				end
-			else
-				-- if object doesnt exist delete it and move on
-				model:Destroy()
-				return
-			end
-		end)
-	end
+    end 
+
 end
 
-function chams(character)
-	-- create model for cloned parts to be in
-    local model = Instance.new("Model")
-    model.Name = character.Name
-    model.Parent = viewportFrame
+dwRunService.Heartbeat:Connect(function()
 
-	-- loop through character
-    for _, obj in next, character:GetChildren() do
-		-- if character has a head then
-        if character:FindFirstChild("Head") then
-			-- clone parts
-            clonePart(obj, model, character)
+    if settings_tbl.ESP_Enabled then
+
+        for k,v in next, dwEntities:GetPlayers() do 
+
+            if v ~= dwLocalPlayer then
+
+                if v.Character and
+                v.Character:FindFirstChild("HumanoidRootPart") and 
+                v.Character:FindFirstChild("Humanoid") and 
+                v.Character:FindFirstChild("Humanoid").Health ~= 0 then
+
+                    if settings_tbl.ESP_TeamCheck == false then
+
+                        local char = v.Character 
+
+                        for k,b in next, char:GetChildren() do 
+
+                            if b:IsA("BasePart") and 
+                            b.Transparency ~= 1 then
+                                
+                                if settings_tbl.Chams then
+
+                                    if not b:FindFirstChild("Glow") and
+                                    not b:FindFirstChild("Chams") then
+
+                                        local chams_box = Instance.new("BoxHandleAdornment", b)
+                                        chams_box.Name = "Chams"
+                                        chams_box.AlwaysOnTop = true 
+                                        chams_box.ZIndex = 4 
+                                        chams_box.Adornee = b 
+                                        chams_box.Color3 = settings_tbl.Chams_Color
+                                        chams_box.Transparency = settings_tbl.Chams_Transparency
+                                        chams_box.Size = b.Size + Vector3.new(0.02, 0.02, 0.02)
+
+                                        local glow_box = Instance.new("BoxHandleAdornment", b)
+                                        glow_box.Name = "Glow"
+                                        glow_box.AlwaysOnTop = false 
+                                        glow_box.ZIndex = 3 
+                                        glow_box.Adornee = b 
+                                        glow_box.Color3 = settings_tbl.Chams_Glow_Color
+                                        glow_box.Size = chams_box.Size + Vector3.new(0.13, 0.13, 0.13)
+
+                                    end
+
+                                else
+
+                                    destroy_chams(char)
+
+                                end
+                            
+                            end
+
+                        end
+
+                    else
+
+                        if v.Team == dwLocalPlayer.Team then
+                            destroy_chams(v.Character)
+                        end
+
+                    end
+
+                else
+
+                    destroy_chams(v.Character)
+
+                end
+
+            end
+
         end
+
+    else 
+
+        for k,v in next, dwEntities:GetPlayers() do 
+
+            if v ~= dwLocalPlayer and 
+            v.Character and 
+            v.Character:FindFirstChild("HumanoidRootPart") and 
+            v.Character:FindFirstChild("Humanoid") and 
+            v.Character:FindFirstChild("Humanoid").Health ~= 0 then
+                
+                destroy_chams(v.Character)
+
+            end
+
+        end
+
     end
-end
 
--- loop players
-for _, plr in next, game:GetService("Players"):GetChildren() do
-	-- get character
-    local character = plr.Character or plr.CharacterAdded:Wait()
-    character:WaitForChild("Head")
-
-	-- add chams to character
-    chams(character)
-
-	-- on character created
-    plr.CharacterAdded:connect(function(char)
-		-- create chams
-        char:WaitForChild("Head")
-        chams(char)
-    end)
-end
-
--- on player join
-game:GetService("Players").PlayerAdded:connect(function(plr)
-	-- get character
-    local character = plr.Character or plr.CharacterAdded:Wait()
-    character:WaitForChild("Head")
-    chams(character)
-    
-	-- on character created
-    plr.CharacterAdded:connect(function(char)
-		-- create chams
-        char:WaitForChild("Head")
-        chams(char)
-    end)
-end)  
+end)
  end)
 
 local CreditsTab = Window:NewTab("Credits")
@@ -289,7 +303,7 @@ CreditsSection:NewButton("SamhithWasTaken#1874 aka myself lol", "credits to my s
     setclipboard(tostring("SamhithWasTaken#1874"))
  end)
 
-CreditsSection:NewButton("Randomguy#6407", "credits to him for chams", function()
+CreditsSection:NewButton("Randomguy#6407", "Credits to him for helping me with the script", function()
     setclipboard(tostring("Randomguy#6407"))
  end)
 
@@ -303,19 +317,19 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
 MiscSection:NewButton("Chat Spammmer", "Spams toxic messages", function(v)
   repeat
     local args = {
-        [1] = "Bad? Just give up and use universal hub!,",
+        [1] = "Admit that you have a skill issue, Get universal hub now!",
         [2] = "All"
     }
     wait(1)
     local args = {
-        [1] = "Why not use universal hub, Why? Because your bad,",
+        [1] = "Just because your bad dosent mean you will always stay bad, Get universal hub now!",
         [2] = "All"
     }
     wait(1)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
     wait(1)
     local args = {
-        [1] = "Just stay mad, Stay mad, No one cares, Just use universal hub, It isnt that hard,",
+        [1] = "Mad because bad? Get universal hub now!",
         [2] = "All"
     }
     wait(1)
@@ -325,6 +339,13 @@ until v == false
 
 MiscSection:NewButton("Aimbot", "Locks onto a player when you right click on someone", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/aimbot"))()
-  end)
-    
+ end)
 
+ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance away", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/nametags.lua"))()
+ end)
+
+
+
+
+    
