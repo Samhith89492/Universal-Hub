@@ -175,9 +175,9 @@ local settings_tbl = {
     ESP_Enabled = true,
     ESP_TeamCheck = false,
     Chams = true,
-    Chams_Color = Color3.fromRGB(13,105,172),
-    Chams_Transparency = 0.1,
-    Chams_Glow_Color = Color3.fromRGB(13,105,172)
+    Chams_Color = Color3.fromRGB(196,40,28)
+    Chams_Transparency = 0,
+    Chams_Glow_Color = Color3.fromRGB(196,40,28)
 }
 
 function destroy_chams(char)
@@ -377,6 +377,10 @@ MiscSection:NewButton("Hitboxes (might not work on some games)", "Extends your h
 			end
 		end
 	end)
+ end)
+
+ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance away", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/tracers"))()
  end)
 
 
