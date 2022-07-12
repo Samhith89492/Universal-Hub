@@ -94,19 +94,19 @@ MovementSection:NewButton("E to fly!", "Press E to fly!", function()
             end
         end
     end
-end)
+ end)
 
 MovementSection:NewSlider("Speed", "Increases your movement", 500, 16, function(v)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
-end)
+ end)
 
 MovementSection:NewSlider("JumpPower", "Increases your jumppower", 500, 50, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
-end)
+ end)
 
 MovementSection:NewKeybind("Toggle UI", "Press a key to toggle the UI", Enum.KeyCode.F, function()
 	Library:ToggleUI()
-end)
+ end)
 
 MovementSection:NewButton("CtrlClickTP", "Press Ctrl+Click to TP", function()
     local Plr = game:GetService("Players").LocalPlayer
@@ -117,7 +117,7 @@ if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) t
 if not Mouse.Target then return end
 Plr.Character:MoveTo(Mouse.Hit.p)
 end)
-end)
+ end)
 
 local Tab = Window:NewTab("Other Scripts")
 
@@ -133,7 +133,7 @@ end
 
 webImport("init")
 webImport("ui/main")
-end)
+ end)
 
 ScriptsSection:NewButton("EngoSpy", "Loads EngoSpy", function()
     local settings = {
@@ -145,11 +145,11 @@ ScriptsSection:NewButton("EngoSpy", "Loads EngoSpy", function()
         blacklistedNames = {}
      }
      loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/engospy/main/source.lua"))(settings)
-end)
+ end)
 
 MovementSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
-end)
+ end)
 
 local Tab = Window:NewTab("Misc")
 
@@ -157,11 +157,11 @@ local MiscSection = Tab:NewSection("Misc")
 
 MiscSection:NewButton("Force Respawn", "Allows you to respawn forcefully", function()
     game.Players.LocalPlayer.Character.Humanoid.Health = 0
-end)
+ end)
 
 MovementSection:NewSlider("Gravity", "Changes your Gravity", 196, 0, function(v)
     game.Workspace.Gravity = v
-end)
+ end)
 
 local ESPTab = Window:NewTab("ESP")
 local ESPSection = ESPTab:NewSection("ESP")
@@ -279,7 +279,7 @@ game:GetService("Players").PlayerAdded:connect(function(plr)
         chams(char)
     end)
 end)  
-end)
+ end)
 
 local CreditsTab = Window:NewTab("Credits")
 
@@ -287,20 +287,20 @@ local CreditsSection = CreditsTab:NewSection("Credits")
 
 CreditsSection:NewButton("SamhithWasTaken#1874 aka myself lol", "credits to my self lol", function()
     setclipboard(tostring("SamhithWasTaken#1874"))
-end)
+ end)
 
 CreditsSection:NewButton("Randomguy#6407", "credits to him for chams", function()
     setclipboard(tostring("Randomguy#6407"))
-end)
+ end)
 
 
 MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function()
     game:GetService("UserInputService").JumpRequest:connect(function()
             game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
     end)
-end)
+ end)
 
-MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
+MiscSection:NewButton("Chat Spammmer", "Spams toxic messages", function(v)
   repeat
     local args = {
         [1] = "Bad? Just give up and use universal hub!,",
@@ -321,7 +321,7 @@ MiscSection:NewButton("AutoToxic Spam", "Spams toxic messages", function(v)
     wait(1)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
 until v == false
-end)
+ end)
 
 MiscSection:NewButton("Aimbot", "Locks onto a player when you right click on someone", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/aimbot"))()
