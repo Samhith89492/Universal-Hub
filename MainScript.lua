@@ -175,7 +175,7 @@ local settings_tbl = {
     ESP_Enabled = true,
     ESP_TeamCheck = false,
     Chams = true,
-    Chams_Color = Color3.fromRGB(196,40,28)
+    Chams_Color = Color3.fromRGB(196,40,28),
     Chams_Transparency = 0.1,
     Chams_Glow_Color = Color3.fromRGB(196,40,28)
 }
@@ -359,7 +359,7 @@ MiscSection:NewButton("Gamepasses (might not work on some games)", "Gives you ga
  end)
 
 MiscSection:NewButton("Hitboxes (might not work on some games)", "Extends your hitboxes", function(v)
-    _G.HeadSize = 20
+    _G.HeadSize = 10
 	_G.Enabled = true
 
 	game:GetService('RunService').RenderStepped:connect(function()
@@ -379,8 +379,73 @@ MiscSection:NewButton("Hitboxes (might not work on some games)", "Extends your h
 	end)
  end)
 
-ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance away", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/tracers"))()
+ESPSection:NewButton("Tracers", "Shows tracers on your screen", function()
+    local lplr = game.Players.LocalPlayer
+local camera = game:GetService("Workspace").CurrentCamera
+local CurrentCamera = workspace.CurrentCamera
+local worldToViewPoint = CurrentCamera.WorldToViewportPoint
+
+_G.Teamcheck = false
+
+for i,v in pairs(game.Players:GetChildren()) do
+    local tracer = Drawing.new("Line")
+    tracer.Visible = false
+    tracer.Color = Color3.new(1,1,1)
+    tracer.Transparency = 1
+
+    function lineEsp()
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if v.Character ~= nil and v.Character:FindFirstChild("Humanoid") ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v ~= lplr and v.Character.Humanoid.Health > 0 then
+                local Vector, OnScreen = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+                if OnScreen then
+                    tracer.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 1)
+                    tracer.To = Vector2.new(Vector.X, Vector.Y)
+                    
+                    if _G.Teamcheck and v.TeamColor == lplr.TeamColor then
+                        tracer.Visible = false
+                        else
+                            tracer.Visible = true
+                    end
+                    else
+                        tracer.Visible = false
+                end
+                else
+                tracer.Visible = false
+            end
+        end)
+    end
+    coroutine.wrap(lineEsp)()
+end
+
+game.Players.PlayerAdded:Connect(function(v)
+    local tracer = Drawing.new("Line")
+    tracer.Visible = false
+    tracer.Color = Color3.new(1,1,1)
+    tracer.Transparency = 1
+
+    function lineEsp()
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if v.Character ~= nil and v.Character:FindFirstChild("Humanoid") ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v ~= lplr and v.Character.Humanoid.Health > 0 then
+                local Vector, OnScreen = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+                if OnScreen then
+                    tracer.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 1)
+                    tracer.To = Vector2.new(Vector.X, Vector.Y)
+                    
+                    if _G.Teamcheck and v.TeamColor == lplr.TeamColor then
+                        tracer.Visible = false
+                        else
+                            tracer.Visible = true
+                    end
+                    else
+                        tracer.Visible = false
+                end
+                else
+                tracer.Visible = false
+            end
+        end)
+    end
+    coroutine.wrap(lineEsp)()
+end)
  end)
 
 
