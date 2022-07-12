@@ -454,6 +454,9 @@ ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance a
 
 CreditsSection:NewButton("CreditsSection:NewButton("zep#1969", "credits to him for tracers", function()
     setclipboard(tostring("zep#1969"))
+	
+CreditsSection:NewButton("CreditsSection:NewButton("Copy discord invite", "Sets our discord invite link to your clipboard", function()
+    setclipboard(tostring("https://discord.gg/RRTDy8uu4t"))
 
 
 
