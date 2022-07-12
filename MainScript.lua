@@ -452,6 +452,9 @@ ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance a
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/silent-aim"))()
  end)
 
+CreditsSection:NewButton("CreditsSection:NewButton("zep#1969", "credits to him for tracers", function()
+    setclipboard(tostring("zep#1969"))
+
 
 
 
