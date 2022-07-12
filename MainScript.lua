@@ -358,7 +358,7 @@ MiscSection:NewButton("Gamepasses (might not work on some games)", "Gives you ga
     end
  end)
 
-MiscSection:NewButton("Hitboxes (might not work on some games)", "Extends your hitboxes", function(v)
+MiscSection:NewButton("Hitboxes (might not work on some games)", "Extends your hitboxes", function()
     _G.HeadSize = 10
 	_G.Enabled = true
 
@@ -448,7 +448,9 @@ game.Players.PlayerAdded:Connect(function(v)
 end)
  end)
 
-
+ESPSection:NewButton("NameTags", "Shows nametags of people from a far distance away", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/silent-aim"))()
+ end)
 
 
 
