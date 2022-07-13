@@ -151,6 +151,46 @@ MovementSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
     workspace.CurrentCamera.FieldOfView = v
  end)
 
+local Tab = Window:NewTab("QOL scripts")
+
+local QOLSection = Tab:NewSection("Quality of life scripts")
+
+QOLSection:NewButton("Rejoin", "Rejoins the game", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+ end)
+
+QOLSection:NewButton("Night sky", "Doesnt burn your eyes lol", function()
+    s = Instance.new("Sky")
+s.Name = "SKY"
+s.SkyboxBk = "http://www.roblox.com/asset/?id=ID"
+s.SkyboxDn = "http://www.roblox.com/asset/?id=ID"
+s.SkyboxFt = "http://www.roblox.com/asset/?id=ID"
+s.SkyboxLf = "http://www.roblox.com/asset/?id=ID"
+s.SkyboxRt = "http://www.roblox.com/asset/?id=ID"
+s.SkyboxUp = "http://www.roblox.com/asset/?id=ID"
+s.Parent = game.Lighting
+ end)
+
+QOLSection:NewButton("Enable Shift lock ", "Enables Shift lock for non shift locked games", function()
+    game:GetService('Players').LocalPlayer.DevEnableMouseLock = true
+ end)
+
+QOLSection:NewButton("Disable Shift lock ", "Disable Shift lock", function()
+    game:GetService('Players').LocalPlayer.DevEnableMouseLock = false
+ end)
+
+QOLSection:NewButton("Disable Shift lock ", "Disable Shift lock", function()
+    game:GetService('Players').LocalPlayer.DevEnableMouseLock = false
+ end)
+
+QOLSection:NewButton("120 FOV ", "Sets FOV to 120", function()
+    game:GetService'Workspace'.Camera.FieldOfView = 120
+ end)
+
+QOLSection:NewButton("70 FOV ", "Sets FOV to 70 (default)", function()
+    game:GetService'Workspace'.Camera.FieldOfView = 70
+ end)
+
 local Tab = Window:NewTab("Misc")
 
 local MiscSection = Tab:NewSection("Misc")
