@@ -156,7 +156,7 @@ local Tab = Window:NewTab("Misc")
 local MiscSection = Tab:NewSection("Misc")
 
 MiscSection:NewButton("Force Respawn", "Allows you to respawn forcefully", function()
-    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+    game.Players.LocalPlayer.Character.Head:Destroy()
  end)
 
 MovementSection:NewSlider("Gravity", "Changes your Gravity", 196, 0, function(v)
