@@ -207,7 +207,7 @@ for i, e in pairs(l:GetChildren()) do
 end
  end)
 
-QOLSection:NewButton("Freecam", "Allows player to freecam", function()
+QOLSection:NewButton("Freecam (toggle with C)", "Allows player to freecam (toggle with C)", function()
     script - -- by slice
 
 ToggleKey = Enum.KeyCode.C
@@ -376,16 +376,16 @@ QOLSection:NewButton("Disable Shift lock ", "Disable Shift lock", function()
     game:GetService('Players').LocalPlayer.DevEnableMouseLock = false
  end)
 
-QOLSection:NewButton("Disable Shift lock ", "Disable Shift lock", function()
-    game:GetService('Players').LocalPlayer.DevEnableMouseLock = false
- end)
-
 QOLSection:NewButton("120 FOV ", "Sets FOV to 120", function()
     game:GetService'Workspace'.Camera.FieldOfView = 120
  end)
 
 QOLSection:NewButton("70 FOV ", "Sets FOV to 70 (default)", function()
     game:GetService'Workspace'.Camera.FieldOfView = 70
+ end)
+
+QOLSection:NewButton("Lagscript ", "Lags like jjsploit", function()
+    settings().Network.IncommingReplicationLag = 100;
  end)
 
 local Tab = Window:NewTab("Misc")
