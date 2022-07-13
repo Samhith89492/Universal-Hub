@@ -208,8 +208,7 @@ end
  end)
 
 QOLSection:NewButton("Freecam (toggle with C)", "Allows player to freecam (toggle with C)", function()
-    script - -- by slice
-
+		
 ToggleKey = Enum.KeyCode.C
 SprintKey = Enum.KeyCode.Tab
 
