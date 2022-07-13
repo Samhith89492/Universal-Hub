@@ -207,9 +207,9 @@ for i, e in pairs(l:GetChildren()) do
 end
  end)
 
-QOLSection:NewButton("Freecam (toggle with C)", "Allows player to freecam (toggle with C)", function()
-		
-ToggleKey = Enum.KeyCode.C
+QOLSection:NewButton("Freecam (toggle with C)", "Allows player to freecam (toggle with C"), function()
+	
+local ToggleKey = Enum.KeyCode.C
 SprintKey = Enum.KeyCode.Tab
 
 localPlayer = game.Players.LocalPlayer
