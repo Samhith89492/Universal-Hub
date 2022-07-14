@@ -385,19 +385,19 @@ MiscSection:NewButton("Infinite Jump", "Allows you to jump in the air", function
 MiscSection:NewButton("Chat Spammmer", "Spams toxic messages", function(v)
   repeat
     local args = {
-        [1] = "Admit that you have a skill issue, Get universal hub now! | Universal hub owner, Also known as SamhithWasTaken1874",
+        [1] = "Admit that you have a skill issue, Get universal hub now! | Made by SamhithWasTaken1874",
         [2] = "All"
     }
     wait(1)
     local args = {
-        [1] = "Just because your bad doesnt mean you will always stay bad, Get universal hub now! | Universal hub owner, Also known as SamhithWasTaken1874",
+        [1] = "Just because your bad doesnt mean you will always stay bad, Get universal hub now! | Made by SamhithWasTaken1874",
         [2] = "All"
     }
     wait(1)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
     wait(1)
     local args = {
-        [1] = "Mad because bad? Get universal hub now! | Universal hub owner, Also known as SamhithWasTaken1874",
+        [1] = "Mad because bad? Get universal hub now! | Made by SamhithWasTaken1874",
         [2] = "All"
     }
     wait(1)
