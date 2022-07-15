@@ -151,60 +151,12 @@ MiscSection:NewButton("Rejoin", "Rejoins the game", function()
     game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
  end)
 
-MiscSection:NewButton("FPS Booster V2", "Boosts your fps", function()
-    local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
-    local g = game
-    local w = g.Workspace
-    local l = g.Lighting
-    local t = w.Terrain
-    t.WaterWaveSize = 0
-    t.WaterWaveSpeed = 0
-    t.WaterReflectance = 0
-    t.WaterTransparency = 0
-    l.GlobalShadows = false
-    l.FogEnd = 9e9
-    l.Brightness = 0
-    settings().Rendering.QualityLevel = "Level01"
-    for i, v in pairs(g:GetDescendants()) do
-        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
-            v.Transparency = 1
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Lifetime = NumberRange.new(0)
-        elseif v:IsA("Explosion") then
-            v.BlastPressure = 1
-            v.BlastRadius = 1
-        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-            v.Enabled = false
-        elseif v:IsA("MeshPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-            v.TextureID = 10385902758728957
-        end
-    end
-    for i, e in pairs(l:GetChildren()) do
-        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-            e.Enabled = false
-        end
-    end
-     end)
-
 MiscSection:NewButton("Enable ShiftLock mode", "Enables shiftlock mode on games which have shiftlock disabled", function()
     game:GetService('Players').LocalPlayer.DevEnableMouseLock = true
  end)
 
 MiscSection:NewButton("Disable Shift lock ", "Disable Shift lock", function()
     game:GetService('Players').LocalPlayer.DevEnableMouseLock = false
- end)
-
-MiscSection:NewButton("120 FOV ", "Sets FOV to 120", function()
-    game:GetService'Workspace'.Camera.FieldOfView = 120
- end)
-
-MiscSection:NewButton("70 FOV ", "Sets FOV to 70 (default)", function()
-    game:GetService'Workspace'.Camera.FieldOfView = 70
  end)
 
 MiscSection:NewButton("Lagscript", "Makes you lag (Use Lagscript Disabler to disable this function)", function()
@@ -1144,13 +1096,19 @@ QOLSection:NewButton("Night Sky V2", "Night sky v2 (added visibility lol)", func
  
 QOLSection:NewButton("Full bright", "makes it bright (good for horror games)", function()
      game.Lighting.TimeOfDay = 10
+     game.Lighting.FogEnd = 1000
+     game.Lighting.Brightness = 0
  end)
 
-QOLSection:NewButton("Totally vape private", "It is TOTALLY vape PRIVATE :troll:", function()
-     game.Players.LocalPlayer:Kick("You really thought this was Bape privat?")
+QOLSection:NewButton("120 FOV ", "Sets FOV to 120", function()
+    game:GetService'Workspace'.Camera.FieldOfView = 120
  end)
 
-MiscSection:NewButton("FPS Boost", "Boosts your fps", function()
+QOLSection:NewButton("70 FOV ", "Sets FOV to 70 (default)", function()
+    game:GetService'Workspace'.Camera.FieldOfView = 70
+ end)
+
+QOLSection:NewButton("FPS Booster", "Boosts your fps", function()
     for _,v in pairs(workspace:GetDescendants()) do
         if v.ClassName == "Part"
         or v.ClassName == "SpawnLocation"
@@ -1161,6 +1119,55 @@ MiscSection:NewButton("FPS Boost", "Boosts your fps", function()
         end
         end
  end)
+
+QOLSection:NewButton("FPS Booster V2", "Boosts your fps", function()
+    local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+    local g = game
+    local w = g.Workspace
+    local l = g.Lighting
+    local t = w.Terrain
+    t.WaterWaveSize = 0
+    t.WaterWaveSpeed = 0
+    t.WaterReflectance = 0
+    t.WaterTransparency = 0
+    l.GlobalShadows = false
+    l.FogEnd = 9e9
+    l.Brightness = 0
+    settings().Rendering.QualityLevel = "Level01"
+    for i, v in pairs(g:GetDescendants()) do
+        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+            v.Transparency = 1
+        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+            v.Lifetime = NumberRange.new(0)
+        elseif v:IsA("Explosion") then
+            v.BlastPressure = 1
+            v.BlastRadius = 1
+        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+            v.Enabled = false
+        elseif v:IsA("MeshPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+            v.TextureID = 10385902758728957
+        end
+    end
+    for i, e in pairs(l:GetChildren()) do
+        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+            e.Enabled = false
+        end
+    end
+     end)
+
+QOLSection:NewButton("Totally bape privte", "It is TOTALLY vape PRIVATE TRUSt :troll:", function()
+     game.Players.LocalPlayer:Kick("You really thought this was bape private? Youre such a clown lmao")
+ end)
+
+QOLSection:NewButton("Future+", "Its Future+ ! :troll:", function()
+     game.Players.LocalPlayer:Kick("You really thought this was future+? Youre such a clown lmao")
+ end)
+
 
 MiscSection:NewButton("ChatSlow", "Makes the chat slow ", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Samhith89492/Universal-Aimbot/main/chatslow"))()
