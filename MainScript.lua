@@ -6,7 +6,7 @@ local Tab = Window:NewTab("Movement")
 local MovementSection = Tab:NewSection("Movement")
 
 MovementSection:NewButton("E to fly!", "Press E to fly!", function()
-    local Speed = 450
+    local Speed = 200
 
 
     if not RootAnchorBypassed then
@@ -96,12 +96,20 @@ MovementSection:NewButton("E to fly!", "Press E to fly!", function()
     end
  end)
 
-MovementSection:NewSlider("Speed", "Increases your movement", 500, 16, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+MovementSection:NewSlider("50 Speed", "Increases your movement", function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+ end)
+
+MovementSection:NewSlider("100 Speed", "Increases your movement", function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+ end)
+
+MovementSection:NewSlider("200 Speed", "Increases your movement", function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
  end)
 
 MovementSection:NewSlider("JumpPower", "Increases your jumppower", 500, 50, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = (v)
  end)
 
 MovementSection:NewButton("CtrlClickTP", "Press Ctrl+Click to TP", function()
@@ -146,10 +154,6 @@ ScriptsSection:NewButton("EngoSpy", "Loads EngoSpy", function()
 local Tab = Window:NewTab("Misc")
 
 local MiscSection = Tab:NewSection("Misc")
-
-MiscSection:NewButton("Rejoin", "Rejoins the game", function()
-    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
- end)
 
 MiscSection:NewButton("Enable ShiftLock mode", "Enables shiftlock mode on games which have shiftlock disabled", function()
     game:GetService('Players').LocalPlayer.DevEnableMouseLock = true
@@ -1086,6 +1090,8 @@ warn("Loaded!")
  
 QOLSection:NewButton("Night Sky", "Sets the sky to night time", function()
      game.Lighting.TimeOfDay = 24
+     game.Lighting.FogEnd = 1000
+     game.Lighting.Brightness = 0
  end)
 
 QOLSection:NewButton("Night Sky V2", "Night sky v2 (added visibility lol)", function()
@@ -1159,6 +1165,9 @@ QOLSection:NewButton("FPS Booster V2", "Boosts your fps", function()
         end
     end
      end)
+QOLSection:NewButton("Rejoin", "Rejoins the game", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+ end)
 
 QOLSection:NewButton("Totally bape privte", "It is TOTALLY vape PRIVATE TRUSt :troll:", function()
      game.Players.LocalPlayer:Kick("You really thought this was bape private? Youre such a clown lmao")
