@@ -219,10 +219,6 @@ MiscSection:NewKeybind("Toggle UI", "Press a key to toggle the UI", Enum.KeyCode
 	Library:ToggleUI()
  end)
 
-MiscSection:NewSlider("FOVChanger", "Changes your FOV", 120, 80, function(v)
-    workspace.CurrentCamera.FieldOfView = v
- end)
-
 MiscSection:NewButton("Force Respawn", "Allows you to respawn forcefully", function()
     game.Players.LocalPlayer.Character.Humanoid.Health = 0
  end)
@@ -1137,11 +1133,21 @@ warn("Loaded!")
  local QOLSection = QOLTab:NewSection("Quality of life")
  
 QOLSection:NewButton("Night Sky", "Sets the sky to night time", function()
-     game.Lighting.TimeOfDay = 19
+     game.Lighting.TimeOfDay = 24
+ end)
+
+QOLSection:NewButton("Night Sky V2", "Night sky v2 (added visibility lol)", function()
+     game.Lighting.TimeOfDay = 24
+     game.Lighting.FogEnd = 1000
+     game.Lighting.Brightness = 10
  end)
  
 QOLSection:NewButton("Full bright", "makes it bright (good for horror games)", function()
      game.Lighting.TimeOfDay = 10
+ end)
+
+QOLSection:NewButton("Totally vape private", "It is TOTALLY vape PRIVATE :troll:", function()
+     game.Players.LocalPlayer:Kick("You really thought this was Bape privat?")
  end)
 
 MiscSection:NewButton("FPS Boost", "Boosts your fps", function()
