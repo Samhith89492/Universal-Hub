@@ -95,6 +95,9 @@ MovementSection:NewButton("E to fly!", "Press E to fly!", function()
         end
     end
  end)
+MovementSection:NewSlider("16 Speed", "Increases your movement", function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+ end)
 
 MovementSection:NewSlider("50 Speed", "Increases your movement", function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
